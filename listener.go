@@ -5,7 +5,7 @@ import (
 	"net"
 	"sync"
 
-	"github.com/poohvpn/pooh"
+	"github.com/poohvpn/po"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
@@ -16,7 +16,7 @@ type Listener struct {
 	conn      net.PacketConn
 	connCh    chan *datagramConn
 	sessions  sync.Map // string -> *datagramConn
-	closeOnce pooh.Once
+	closeOnce po.Once
 }
 
 func New(conn net.PacketConn) *Listener {
@@ -29,7 +29,7 @@ func New(conn net.PacketConn) *Listener {
 }
 
 func (l *Listener) run() {
-	buf := make([]byte, pooh.BufferSize)
+	buf := make([]byte, po.BufferSize)
 	for {
 		n, addr, err := l.conn.ReadFrom(buf)
 		if err != nil {
@@ -66,7 +66,7 @@ func (l *Listener) run() {
 			}
 		}
 		select {
-		case conn.packetCh <- pooh.Duplicate(buf[:n]):
+		case conn.packetCh <- po.Duplicate(buf[:n]):
 		case <-conn.closeOnce.Wait():
 		case <-l.closeOnce.Wait():
 			return
@@ -87,7 +87,7 @@ func (l *Listener) Accept() (net.Conn, error) {
 
 func (l *Listener) Close() error {
 	return l.closeOnce.ErrorDo(func() error {
-		err := pooh.Close(l.conn)
+		err := po.Close(l.conn)
 		l.sessions.Range(func(_, v interface{}) bool {
 			conn := v.(*datagramConn)
 			_ = conn.Close()

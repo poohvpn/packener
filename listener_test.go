@@ -9,7 +9,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/poohvpn/pooh"
+	"github.com/poohvpn/po"
 )
 
 const connAmount = 3
@@ -91,7 +91,7 @@ func runConn(index int, wg *sync.WaitGroup) {
 }
 
 func runEcho(conn net.Conn) {
-	buf := make([]byte, pooh.BufferSize)
+	buf := make([]byte, po.BufferSize)
 	for i := 0; i < loopTimes; i++ {
 		nr, err := conn.Read(buf)
 		if err != nil {

@@ -6,14 +6,14 @@ import (
 	"os"
 	"time"
 
-	"github.com/poohvpn/pooh"
+	"github.com/poohvpn/po"
 )
 
 type datagramConn struct {
 	localAddr    net.Addr
 	remoteAddr   net.Addr
 	packetCh     chan []byte
-	closeOnce    pooh.Once
+	closeOnce    po.Once
 	writeFunc    func(b []byte, addr net.Addr) (n int, err error)
 	readDeadline *pipeDeadline
 	superDelete  func()
