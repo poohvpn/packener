@@ -12,17 +12,15 @@ var QueueSize = 64
 
 type Listener struct {
 	conn      net.PacketConn
-	connCh    chan *Conn
-	sessions  sync.Map // string -> *Conn
-	closeOnce pooh.ErrorOnce
+	connCh    chan *datagramConn
+	sessions  sync.Map // string -> *datagramConn
+	closeOnce pooh.Once
 }
-
-var _ net.Listener = &Listener{}
 
 func New(conn net.PacketConn) *Listener {
 	l := &Listener{
 		conn:   conn,
-		connCh: make(chan *Conn, QueueSize),
+		connCh: make(chan *datagramConn, QueueSize),
 	}
 	go l.run()
 	return l
@@ -41,7 +39,7 @@ func (l *Listener) run() {
 		index := addr.String()
 		v, exist := l.sessions.Load(index)
 		if !exist {
-			v, exist = l.sessions.LoadOrStore(index, &Conn{
+			v, exist = l.sessions.LoadOrStore(index, &datagramConn{
 				localAddr:    l.Addr(),
 				remoteAddr:   addr,
 				packetCh:     make(chan []byte, QueueSize),
@@ -54,7 +52,7 @@ func (l *Listener) run() {
 				}(index),
 			})
 		}
-		conn := v.(*Conn)
+		conn := v.(*datagramConn)
 		if !exist {
 			select {
 			case l.connCh <- conn:
@@ -83,10 +81,10 @@ func (l *Listener) Accept() (net.Conn, error) {
 }
 
 func (l *Listener) Close() error {
-	return l.closeOnce.Do(func() error {
+	return l.closeOnce.ErrorDo(func() error {
 		err := pooh.Close(l.conn)
 		l.sessions.Range(func(_, v interface{}) bool {
-			conn := v.(*Conn)
+			conn := v.(*datagramConn)
 			_ = conn.Close()
 			return true
 		})

@@ -1,3 +1,5 @@
+github.com/MichaelTJones/pcg v0.0.0-20180122055547-df440c6ed7ed h1:hQC4FSwvsLH6rOLJTndsHnANARF9RwW4PbrDTjks/0A=
+github.com/MichaelTJones/pcg v0.0.0-20180122055547-df440c6ed7ed/go.mod h1:NQ4UMHqyfXyYVmZopcfwPRWJa0rw2aH16eDIltReVUo=
 github.com/coreos/go-systemd/v22 v22.3.2/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSVTIJ3seZv2GcEnc=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -10,12 +12,9 @@ github.com/hashicorp/go-multierror v1.1.1/go.mod h1:iw975J/qwKPdAO1clOe2L8331t/9
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/poohvpn/pooh v0.0.0-19891106011052-bc9b43a9ad3d h1:MIOfzdfC7sLAHtG1jDfz6pcCtqVGLf/omVKZE2R+iew=
-github.com/poohvpn/pooh v0.0.0-19891106011052-bc9b43a9ad3d/go.mod h1:4I4EMvwuQKPdxiCer19EGuMmJBx00ckNquzPGyPlat4=
-github.com/poohvpn/pooh v0.0.0-19891211232730-e6af7a7905e0 h1:LB1NpMg1Hxbmzk03VcowTXVBWtPOg2Gjr0k//B7+XD4=
-github.com/poohvpn/pooh v0.0.0-19891211232730-e6af7a7905e0/go.mod h1:4I4EMvwuQKPdxiCer19EGuMmJBx00ckNquzPGyPlat4=
+github.com/poohvpn/pooh v0.0.0-19891224233051-de0241353935 h1:1shPc+g7aE4keEoKRDA5nCkcXkoFHa9Y+1qlPrOFXgA=
+github.com/poohvpn/pooh v0.0.0-19891224233051-de0241353935/go.mod h1:2qgz4YZFPMgDiX5SaVLzoE2kh4C9ejox2sGdCgl34RQ=
 github.com/rs/xid v1.3.0/go.mod h1:trrq9SKmegXys3aeAKXMUTdJsYXVwGY3RLcfgqegfbg=
-github.com/rs/zerolog v1.25.0 h1:Rj7XygbUHKUlDPcVdoLyR91fJBsduXj5fRxyqIQj/II=
 github.com/rs/zerolog v1.25.0/go.mod h1:7KHcEGe0QZPOm2IE4Kpb5rTh6n1h2hIgS5OOnu1rUaI=
 github.com/rs/zerolog v1.26.0 h1:ORM4ibhEZeTeQlCojCK2kPz1ogAY4bGs4tD+SaAdGaE=
 github.com/rs/zerolog v1.26.0/go.mod h1:yBiM87lvSqX8h0Ww4sdzNSkVYZ8dL2xjZJG1lAuGZEo=

@@ -9,19 +9,19 @@ import (
 	"github.com/poohvpn/pooh"
 )
 
-type Conn struct {
+type datagramConn struct {
 	localAddr    net.Addr
 	remoteAddr   net.Addr
 	packetCh     chan []byte
-	closeOnce    pooh.ErrorOnce
+	closeOnce    pooh.Once
 	writeFunc    func(b []byte, addr net.Addr) (n int, err error)
 	readDeadline *pipeDeadline
 	superDelete  func()
 }
 
-var _ net.Conn = &Conn{}
+var _ net.Conn = &datagramConn{}
 
-func (c *Conn) Read(b []byte) (n int, err error) {
+func (c *datagramConn) Read(b []byte) (n int, err error) {
 	select {
 	case p := <-c.packetCh:
 		return copy(b, p), nil
@@ -32,34 +32,34 @@ func (c *Conn) Read(b []byte) (n int, err error) {
 	}
 }
 
-func (c *Conn) Write(b []byte) (n int, err error) {
+func (c *datagramConn) Write(b []byte) (n int, err error) {
 	return c.writeFunc(b, c.remoteAddr)
 }
 
-func (c *Conn) LocalAddr() net.Addr {
+func (c *datagramConn) LocalAddr() net.Addr {
 	return c.localAddr
 }
 
-func (c *Conn) RemoteAddr() net.Addr {
+func (c *datagramConn) RemoteAddr() net.Addr {
 	return c.remoteAddr
 }
 
-func (c *Conn) SetDeadline(t time.Time) error {
+func (c *datagramConn) SetDeadline(t time.Time) error {
 	c.readDeadline.set(t)
 	return nil
 }
 
-func (c *Conn) SetReadDeadline(t time.Time) error {
+func (c *datagramConn) SetReadDeadline(t time.Time) error {
 	c.readDeadline.set(t)
 	return nil
 }
 
-func (c *Conn) SetWriteDeadline(t time.Time) error {
+func (c *datagramConn) SetWriteDeadline(t time.Time) error {
 	return nil
 }
 
-func (c *Conn) Close() error {
-	return c.closeOnce.Do(func() error {
+func (c *datagramConn) Close() error {
+	return c.closeOnce.ErrorDo(func() error {
 		c.superDelete()
 		return nil
 	})
