@@ -1,6 +1,7 @@
 package packener
 
 import (
+	"errors"
 	"io"
 	"net"
 	"sync"
@@ -33,7 +34,7 @@ func (l *Listener) run() {
 	for {
 		n, addr, err := l.conn.ReadFrom(buf)
 		if err != nil {
-			if err == net.ErrClosed {
+			if errors.Is(err, net.ErrClosed) {
 				return
 			}
 			panic(err)
