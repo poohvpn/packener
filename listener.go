@@ -6,6 +6,8 @@ import (
 	"sync"
 
 	"github.com/poohvpn/pooh"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 )
 
 var QueueSize = 64
@@ -39,6 +41,9 @@ func (l *Listener) run() {
 		index := addr.String()
 		v, exist := l.sessions.Load(index)
 		if !exist {
+			log.Debug().Func(func(e *zerolog.Event) {
+				e.Str("index", index).Str("network", addr.Network()).Msg("packener: New Session")
+			})
 			v, exist = l.sessions.LoadOrStore(index, &datagramConn{
 				localAddr:    l.Addr(),
 				remoteAddr:   addr,
