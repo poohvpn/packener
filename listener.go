@@ -3,7 +3,6 @@ package packener
 import (
 	"io"
 	"net"
-	"strings"
 	"sync"
 
 	"github.com/poohvpn/pooh"
@@ -34,7 +33,7 @@ func (l *Listener) run() {
 	for {
 		n, addr, err := l.conn.ReadFrom(buf)
 		if err != nil {
-			if strings.Contains(err.Error(), "use of closed network connection") {
+			if err == net.ErrClosed {
 				return
 			}
 			panic(err)
