@@ -2,7 +2,6 @@ package packener
 
 import (
 	"errors"
-	"io"
 	"net"
 	"sync"
 
@@ -76,7 +75,7 @@ func (l *Listener) Accept() (net.Conn, error) {
 	for {
 		select {
 		case <-l.closeOnce.Wait():
-			return nil, io.EOF
+			return nil, net.ErrClosed
 		case conn := <-l.connCh:
 			return conn, nil
 		}
